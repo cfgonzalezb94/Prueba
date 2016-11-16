@@ -1,0 +1,75 @@
+/**
+ * Content.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 12/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.service.gcm;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author <a href="Alejito@softone.com.co">Alejito</a>
+ *
+ */
+public class Content implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private List<String> registration_ids;
+    private Map<String,String> data;
+
+    public void addRegId(String regId){
+        if(registration_ids == null)
+            registration_ids = new LinkedList<String>();
+        registration_ids.add(regId);
+    }
+
+    public void createData(String title, String message){
+        if(data == null)
+            data = new HashMap<String,String>();
+
+        data.put("title", title);
+        data.put("message", message);
+    }
+    
+    public void addNewData(String name, String value){
+    	if(data == null)
+            data = new HashMap<String,String>();
+
+        data.put(name, value);
+    }
+
+	/**
+	 * @return the registration_ids
+	 */
+	public List<String> getRegistration_ids() {
+		return registration_ids;
+	}
+
+	/**
+	 * @param registration_ids the registration_ids to set
+	 */
+	public void setRegistration_ids(List<String> registration_ids) {
+		this.registration_ids = registration_ids;
+	}
+
+	/**
+	 * @return the data
+	 */
+	public Map<String, String> getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(Map<String, String> data) {
+		this.data = data;
+	}
+    
+}

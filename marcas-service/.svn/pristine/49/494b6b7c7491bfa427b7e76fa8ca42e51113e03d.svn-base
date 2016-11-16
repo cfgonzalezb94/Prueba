@@ -1,0 +1,16 @@
+//Url Login User
+localhost:8080/disponible-service/rest/securityService/userLogin?email=agaray@softone.com.co&password=clave123
+
+//Url Update Current Room
+localhost:8080/disponible-service/rest/workerService/currentRoom?idWorker=2&idRoom=2
+
+//Url Update WorkerState
+localhost:8080/disponible-service/rest/workerService/workerState?idWorker=2&idWorkerState=2&timeAutoChange=10&timeChange=1418167372723
+
+
+//Url find all Rooms
+localhost:8080/disponible-service/rest/workerService/findAllRoomsMap
+
+//Url find worker by name
+localhost:8080/disponible-service/rest/userService/findUserbyname?name=alexander&idRol=2
+

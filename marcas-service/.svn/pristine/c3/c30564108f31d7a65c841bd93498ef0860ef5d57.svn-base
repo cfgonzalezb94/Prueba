@@ -1,0 +1,389 @@
+/**
+ * WorkerController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 4/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.bo.EventWorker;
+import co.com.softone.disponible.logic.bo.GenericResponse;
+import co.com.softone.disponible.logic.bo.RoomDetail;
+import co.com.softone.disponible.logic.bo.RoomMap;
+import co.com.softone.disponible.logic.bo.WorkerDetail;
+import co.com.softone.disponible.logic.constants.Constants;
+import co.com.softone.disponible.logic.entities.Service;
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.exception.DisponibleBusinessException;
+import co.com.softone.disponible.logic.services.UserService;
+import co.com.softone.disponible.logic.services.WorkerService;
+import co.com.softone.disponible.service.gcm.Content;
+import co.com.softone.disponible.service.gcm.SendMessage;
+
+/**
+ * Class to produce worker service json to android layer.
+ * 
+ * @author <a href="agaray@softone.com.co">Alexander Garay</a>
+ *
+ */
+@Controller
+@RequestMapping("/workerService")
+public class WorkerController {
+	
+	@Autowired
+    @Qualifier("workerService")
+    private WorkerService workerService;
+	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
+	
+	/**
+	 * <p>
+	 * Update the current room to the worker.
+	 * </p>
+	 * 
+	 * @param idWorker
+	 * @param idRoom
+	 * @return resultOk
+	 */
+    @RequestMapping(value = "currentRoom", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse currentRoom(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="idRoom") BigInteger idRoom) {
+    	 
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		boolean result = workerService.updateCurrentRoom(idWorker, idRoom);
+    		
+    		response.setData(result);
+    		response.setService("workerService_currentRoom");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+
+    }
+    
+    @RequestMapping(value = "workerState", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse workerState(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="idWorkerState") BigInteger idWorkerState, @RequestParam(value="timeAutoChange") Integer timeAutoChange, @RequestParam(value="timeChange") Long timeChange) {
+    	    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		boolean result = workerService.updateWorkerState(idWorker, idWorkerState, timeAutoChange, timeChange);
+    		
+    		response.setData(result);
+    		response.setService("workerService_workerState");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+
+    }
+    
+    /**
+     * <p>
+     * Find all rooms in the system to build the map.
+     * </p>
+     * 
+     * @return rooms
+     */
+    @RequestMapping(value = "findAllRoomsMap", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findAllRoomsMap(@RequestParam(value="idBusiness") BigInteger idBusiness){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		List<RoomMap> roomMapList = workerService.findAllRoomsMap(idBusiness);
+    		
+    		response.setData(roomMapList);
+    		response.setService("workerService_findAllRoomsMap");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	 
+    }
+    
+    /**
+     * <p>
+     * Find a room by its location.
+     * </p>
+     * 
+     * @return rooms
+     */
+    @RequestMapping(value = "findRoomByLocation", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findRoomByLocation(@RequestParam(value="latitude") double latitude, @RequestParam(value="longitude") double longitude){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		RoomDetail roomDetail = workerService.findRoomByLocation(latitude, longitude);
+    		
+    		response.setData(roomDetail);
+    		response.setService("workerService_findRoomByLocation");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * Find the worker detail by its id.
+     * </p>
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "findWorkerDetail", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findWorkerDetail(@RequestParam(value="idWorker") BigInteger id){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		WorkerDetail workerDetail = workerService.findWorkerDetail(id);
+    		
+    		response.setData(workerDetail);
+    		response.setService("workerService_findWorkerDetail");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	 
+    }
+    
+    /**
+     * <p>
+     * Find all service by worker
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "findWorkerService", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findWorkerService(@RequestParam(value="idWorker") BigInteger id){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		List<Service> serviceList = workerService.findWorkerService(id);
+    		
+    		response.setData(serviceList);
+    		response.setService("workerService_findWorkerService");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * Find all event by worker
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "findEventWorker", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findEventWorker(@RequestParam(value="idWorker") BigInteger idWorker){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		List<EventWorker> eventWorkerList = workerService.findEventByWorker(idWorker);
+    		
+    		response.setData(eventWorkerList);
+    		response.setService("workerService_findEventWorker");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * Find all Worker by name and business
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "findWorkerByFirstNameAndBusiness", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findWorkerByFirstNameAndBusiness(@RequestParam(value="firstName") String firstName, @RequestParam(value="idBusiness") BigInteger idBusiness){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		List<User> userList = workerService.findWorkerByFirstNameAndBusiness(firstName, idBusiness);
+    		
+    		response.setData(userList);
+    		response.setService("workerService_findWorkerByFirstNameAndBusiness");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }        
+    
+    /**
+     * <p>
+     * Send a notification to the device of a user.
+     * </p>
+     * 
+     * @param idUser
+     * @param title
+     * @param message
+     * @return
+     */
+    @RequestMapping(value = "sendMessageGoogle", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse sendMessageGoogle(@RequestParam(value="idUser" ) BigInteger idUser, @RequestParam(value="title") String title, @RequestParam(value="message") String message){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		User user = userService.findUserById(idUser);
+        	
+        	Content content = new Content();
+        	content.addRegId(user.getDeviceId());
+        	content.createData(title, message);
+        	
+        	SendMessage.post(content);
+        	
+    		response.setData("");
+    		response.setService("workerService_sendMessageGoogle");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+
+    /**
+     * <p>
+     * Update Services by worker
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "addServiceWorker", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse addServiceWorker(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="serviceName") String serviceName){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		boolean result = workerService.addServiceWorker(idWorker, serviceName);
+    		
+    		response.setData(result);
+    		response.setService("workerService_addServiceWorker");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * Delete Services by worker
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "deleteServiceWorker", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse deleteServiceWorker(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="serviceName") String serviceName){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		boolean result = workerService.deleteServiceWorker(idWorker, serviceName);
+    		
+    		response.setData(result);
+    		response.setService("workerService_deleteServiceWorker");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	 
+    }
+    
+    /**
+     * <p>
+     * Update Profile by worker
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "updateProfileWorker", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse updateProfileWorker(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="firstName") String firstName,  @RequestParam(value="lastName") String lastName, @RequestParam(value="cellPhone") BigInteger cellphone){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		boolean result = workerService.updateProfileWorker(idWorker, firstName, lastName, cellphone);
+    		
+    		response.setData(result);
+    		response.setService("workerService_updateProfileWorker");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * Save worker in database
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "saveWorker", method = RequestMethod.GET)
+    public @ResponseBody User saveWorker(@RequestParam(value="firstname") String firstname, @RequestParam(value="lastname") String lastname, @RequestParam(value="cellphone") BigInteger cellphone, @RequestParam(value="email") String email, @RequestParam(value="password") String password, @RequestParam(value="business") BigInteger idbusiness) {
+       
+    	User saveUser=null;
+    	try{
+    		saveUser = workerService.saveWorker(firstname, lastname, cellphone, email, password, idbusiness);
+    	}catch (DisponibleBusinessException e) {
+    		saveUser = new User();
+		}catch (Exception e) {
+			saveUser = new User();
+		}
+    	         
+    	return saveUser;      
+    }
+}

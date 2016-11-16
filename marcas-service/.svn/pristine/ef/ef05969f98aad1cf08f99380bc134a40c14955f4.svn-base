@@ -1,0 +1,7 @@
+//Url Login User
+localhost:8080/disponible-service/rest/securityService/userLogin?email=agaray@softone.com.co&password=clave123
+
+//Url Current Room
+localhost:8080/disponible-service/rest/workerService/currentRoom?idWorker=2&idRoom=1
+
+

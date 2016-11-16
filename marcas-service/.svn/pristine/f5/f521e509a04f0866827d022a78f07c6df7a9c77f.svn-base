@@ -1,0 +1,346 @@
+/**
+ * UserController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 4/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.bo.EventUser;
+import co.com.softone.disponible.logic.bo.GenericResponse;
+import co.com.softone.disponible.logic.constants.Constants;
+import co.com.softone.disponible.logic.entities.Business;
+import co.com.softone.disponible.logic.entities.Event;
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.exception.DisponibleBusinessException;
+import co.com.softone.disponible.logic.services.UserService;
+import co.com.softone.disponible.service.gcm.SendMessage;
+
+/**
+ * Class to produce worker user json to android layer.
+ * 
+ * @author <a href="cgonzalez@softone.com.co">Christian Gonzalez</a>
+ *
+ */
+@Controller
+@RequestMapping("/userService")
+public class UserController {
+	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
+	
+	@Autowired
+    @Qualifier("sendMessage")
+    private SendMessage sendMessage;
+	
+    @RequestMapping(value = "findWorkerbyname", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findWorkerbyname(@RequestParam(value="name") String name) {
+    	
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		List<User> listUser = userService.findWorkerByname(name); 
+    		
+    		response.setData(listUser);
+    		response.setService("userService_findWorkerbyname");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+
+    
+    @RequestMapping(value = "saveEvent", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse saveEvent(@RequestParam(value="requestTime") Long requestTime, @RequestParam(value="timetoarrive") Integer timetoarrive, @RequestParam(value="idRoom") BigInteger idRoom, @RequestParam(value="idEventState") BigInteger idEventState, @RequestParam(value="idUser") BigInteger idUser, @RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="idUserWorker")BigInteger idUserWorker) {
+    	    		
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		Event event = userService.saveEvent(requestTime, timetoarrive, idRoom, idEventState, idUser, idWorker);
+    		String result = event.getIdEvent().toString();
+    		
+    		if(event.getWorker().getWorkerState().getName().equals("AVAILABLE")){
+    			sendMessage.post(idUserWorker, Constants.TITULO_NOTIFICACION_N1, Constants.MSG_NOTIFICACION_N1, "idUser", idUser.toString(), "idEvent", result);
+    			System.out.println("Envio notificacion N1 al worker: " + idUserWorker);
+    		}
+    		    		
+    		response.setData(result);
+    		response.setService("userService_saveEvent");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+
+    
+    @RequestMapping(value = "saveUser", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse saveUser(@RequestParam(value="firstname") String firstname, @RequestParam(value="lastname") String lastname, @RequestParam(value="cellphone") BigInteger cellphone, @RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+       
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		User saveUser = userService.saveUser(firstname, lastname, cellphone, email, password);
+    		response.setData(saveUser);
+    		response.setService("userService_saveUser");
+    		
+    	}catch (DisponibleBusinessException e) {
+    		response.setMessageError(e.getMessageError());
+		}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;   
+    }
+    
+    @RequestMapping(value = "cancelEvent", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse cancelEvent(@RequestParam(value="idEvent") BigInteger idEvent, @RequestParam(value="idEventState") BigInteger idEventState) {
+       
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		Event cancelEvent = userService.cancelEvent(idEvent, idEventState);
+    		BigInteger idWorker = cancelEvent.getWorker().getIdWorker();
+    		
+    		if (idEventState.equals(new BigInteger("4")))
+    			sendMessage.post(idWorker, Constants.TITULO_NOTIFICACION_N3, Constants.MSG_NOTIFICACION_N3);
+    		
+    		response.setData(cancelEvent);
+    		response.setService("userService_cancelEvent");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+
+    
+    @RequestMapping(value = "saveIdDevice", method = RequestMethod.GET)
+    public @ResponseBody void saveIdDevice(@RequestParam(value="idDevice") String idDevice, @RequestParam(value="idUser") BigInteger idUser){
+    	userService.saveIdDevice(idDevice, idUser);
+    }
+    
+    @RequestMapping(value = "findAllBusiness", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findAllBusiness() {
+    	
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		List<Business> listBusiness = userService.findAllBusiness();
+    		
+    		response.setData(listBusiness);
+    		response.setService("userService_findAllBusiness");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+    
+    /**
+     * <p>
+     * Find a User by your worker asociated.
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "findUserByIdWorker", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findUserByIdWorker(@RequestParam(value="idWorker") BigInteger idWorker){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		User user = userService.findUserByIdWorker(idWorker);
+    		
+    		response.setData(user);
+    		response.setService("userService_findUserByIdWorker");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    @RequestMapping(value = "findEventPendingUser", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findEventPendingUser(@RequestParam(value="idUser") BigInteger idUser) {
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		List<EventUser> listEventUser = userService.findEventPendingUser(idUser);
+    		List<EventUser> listEventUserE = userService.findEventEnrollUser(idUser);
+    		List<EventUser> listEventUserP = userService.findEventProgressUser(idUser);
+    		
+    		for(EventUser eventUser: listEventUserE){
+    			listEventUser.add(eventUser);
+    		}
+    		
+    		for(EventUser eventUser: listEventUserP){
+    			listEventUser.add(eventUser);
+    		}
+    		
+    		response.setData(listEventUser);
+    		response.setService("userService_findEventPendingUser");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	   	
+    	return response;
+    }
+    
+    @RequestMapping(value = "findEventEnrollUser", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findEventEnrollUser(@RequestParam(value="idUser") BigInteger idUser) {
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		List<EventUser> listEventUser = userService.findEventEnrollUser(idUser);
+    		
+    		response.setData(listEventUser);
+    		response.setService("userService_findEventEnrollUser");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	   	
+    	return response;
+    }
+    
+    /**
+     * <p>
+     * Update Profile by user
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "updateProfileUser", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse updateProfileUser(@RequestParam(value="idUser") BigInteger idUser, @RequestParam(value="firstName") String firstName,  @RequestParam(value="lastName") String lastName, @RequestParam(value="cellPhone") BigInteger cellphone){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		boolean result = userService.updateProfileUser(idUser, firstName, lastName, cellphone);
+    		
+    		response.setData(result);
+    		response.setService("userService_updateProfileUser");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * FInd a user by your id.
+     * </p>
+     * 
+     * @return 
+     */
+    @RequestMapping(value = "findUserById", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findWorkerById(@RequestParam(value="idUser") BigInteger idUser){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		
+    		User user = userService.findUserById(idUser);
+    		
+    		response.setData(user);
+    		response.setService("userService_findUserById");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    /**
+     * <p>
+     * Send a notification to the device of a user.
+     * </p>
+     * 
+     * @param idUser
+     * @param title
+     * @param message
+     * @return
+     */
+    @RequestMapping(value = "sendMessageGoogleN4", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse sendMessageGoogleN4(@RequestParam(value="idUser") BigInteger idUser, @RequestParam(value="message") String message, @RequestParam(value="idWorker") BigInteger idWorker){
+    	
+    	GenericResponse response = new GenericResponse();
+    	try{
+    		String result = "";
+    		if(message.equals("acepto")){
+    			sendMessage.post(idUser, Constants.TITULO_NOTIFICACION_N4, Constants.MSG_NOTIFICACION_N4, "idWorker", idWorker.toString());
+    			System.out.println("Se envia la notificacion N4 al usuario : " + idUser + " y al id" + idWorker);
+    			result = "1";
+    		}else if (message.equals("rechazo")){
+    			sendMessage.post(idUser, Constants.TITULO_NOTIFICACION_N5, Constants.MSG_NOTIFICACION_N5);
+    			System.out.println("Se envia la notificacion N5 al usuario : " + idUser);
+    			result = "2";
+    		}    		
+			    		    		
+    		response.setData(result);
+    		response.setService("workerService_sendMessageGoogleN4");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    	
+    }
+    
+    @RequestMapping(value = "updateEvent", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse updateEvent(@RequestParam(value="idEvent") BigInteger idEvent, @RequestParam(value="requestTime") Long requestTime, @RequestParam(value="timetoarrive") Integer timetoarrive, @RequestParam(value="idEventState") BigInteger idEventState, @RequestParam(value="idUserWorker")BigInteger idUserWorker, @RequestParam(value="idUser")BigInteger idUser) {
+    	    		
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		Event event = userService.updateEvent(idEvent, requestTime, timetoarrive, idEventState);
+    		String result = event.getIdEvent().toString();
+    		
+    		if(event.getWorker().getWorkerState().getName().equals("AVAILABLE")){
+    			sendMessage.post(idUserWorker, Constants.TITULO_NOTIFICACION_N2, Constants.MSG_NOTIFICACION_N2, "idUser", idUser.toString(), "idEvent", result);
+    	   	}
+			    		    		
+    		response.setData(result);
+    		response.setService("userService_updateEvent");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+
+}

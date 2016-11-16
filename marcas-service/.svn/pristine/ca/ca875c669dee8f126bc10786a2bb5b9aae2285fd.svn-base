@@ -1,0 +1,45 @@
+/**
+ * UserController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 4/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.entities.Rol;
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.services.UserService;
+
+/**
+ * Class to produce worker user json to android layer.
+ * 
+ * @author <a href="cgonzalez@softone.com.co">Christian Gonzalez</a>
+ *
+ */
+@Controller
+@RequestMapping("/userService")
+public class UserController {
+	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
+	
+    @RequestMapping(value = "findUserbyname", method = RequestMethod.GET)
+    public @ResponseBody List<User> findUserbyname(@RequestParam(value="name") String name, @RequestParam(value="idRol") BigInteger idRol) {
+    	List<User> listUser = userService.findUserByname(name, idRol);    	   
+    	return listUser;
+    }
+
+}

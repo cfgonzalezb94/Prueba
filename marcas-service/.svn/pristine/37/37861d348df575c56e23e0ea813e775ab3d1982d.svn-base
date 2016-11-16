@@ -1,0 +1,85 @@
+/**
+ * UserController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 4/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.exception.DisponibleBusinessException;
+import co.com.softone.disponible.logic.services.UserService;
+
+/**
+ * Class to produce worker user json to android layer.
+ * 
+ * @author <a href="cgonzalez@softone.com.co">Christian Gonzalez</a>
+ *
+ */
+@Controller
+@RequestMapping("/userService")
+public class UserController {
+	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
+	
+    @RequestMapping(value = "findWorkerbyname", method = RequestMethod.GET)
+    public @ResponseBody List<User> findWorkerbyname(@RequestParam(value="name") String name) {
+    	List<User> listUser = userService.findWorkerByname(name);    	   
+    	return listUser;
+    }
+    
+    @RequestMapping(value = "saveEvent", method = RequestMethod.GET)
+    public @ResponseBody String saveEvent(@RequestParam(value="requestTime") Long requestTime, @RequestParam(value="timetoarrive") Integer timetoarrive, @RequestParam(value="idRoom") BigInteger idRoom, @RequestParam(value="idEventState") BigInteger idEventState, @RequestParam(value="idUser") BigInteger idUser, @RequestParam(value="idWorker") BigInteger idWorker ) {
+    	    		
+    	 String result = userService.saveEvent(requestTime, timetoarrive, idRoom, idEventState, idUser, idWorker);
+    	 
+    	return result;
+    }
+    
+    @RequestMapping(value = "saveUser", method = RequestMethod.GET)
+    public @ResponseBody User saveUser(@RequestParam(value="firstname") String firstname, @RequestParam(value="lastname") String lastname, @RequestParam(value="cellphone") BigInteger cellphone, @RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+       
+    	User saveUser=null;
+    	try{
+    		saveUser = userService.saveUser(firstname, lastname, cellphone, email, password);
+    	}catch (DisponibleBusinessException e) {
+    		saveUser = new User();
+    		saveUser.setMensajeError(e.getMessage());
+    		System.out.println("error 2 en el servicio: "+ e);
+		}catch(TransactionSystemException e){
+			System.out.println("entro a la exception TransactionSystemException en el servicio...................................****************************!!!!!!!!!!!!!!!!!!!!!"+e);
+			e.printStackTrace();
+		}catch (Exception e) {
+    		System.out.println("error 3 en el servicio: "+ e);
+		}
+    	         
+    	return saveUser;      
+    }
+    
+    @RequestMapping(value = "cancelEvent", method = RequestMethod.GET)
+    public @ResponseBody boolean cancelEvent(@RequestParam(value="idEvent") BigInteger idEvent) {
+       boolean cancelEvent = userService.cancelEvent(idEvent);         
+       return cancelEvent;      
+    }
+    
+    @RequestMapping(value = "saveIdDevice", method = RequestMethod.GET)
+    public @ResponseBody void saveIdDevice(@RequestParam(value="idDevice") String idDevice, @RequestParam(value="idUser") BigInteger idUser){
+    	userService.saveIdDevice(idDevice, idUser);
+    }
+ 
+}

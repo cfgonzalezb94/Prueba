@@ -1,0 +1,97 @@
+/**
+ * SecurityController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 24/11/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+import java.util.Date;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.bo.GenericResponse;
+import co.com.softone.disponible.logic.constants.Constants;
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.services.SecurityService;
+
+/**
+ * Class to produce security service json to android layer.
+ * 
+ * @author <a href="ehurtado@softone.com.co">Edwin Alejandro Hurtado</a>
+ *
+ */
+@Controller
+@RequestMapping("/securityService")
+public class SecurityController {
+
+	private Logger log = LoggerFactory.getLogger(SecurityController.class);
+	
+    @Autowired
+    @Qualifier("securityService")
+    private SecurityService securityService;
+    
+    @RequestMapping(value = "allUsers", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findAllUsers() {
+
+    	long idTransaccion = new Date().getTime();
+    	log.info("{} - findAllUsers()",idTransaccion);
+    	
+    	GenericResponse response = new GenericResponse();
+    	response.setService("securityService_allUsers");
+    	try{
+    		
+    		List<User> users = securityService.findAllUser();
+    		response.setData(users);
+    		
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	log.info("{} - response - service: {}, mensajeError: {}, data: {} ",idTransaccion, response.getService(),response.getMessageError(),response.getData());
+    	
+    	return response;
+    }
+
+    @RequestMapping(value = "userLogin", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse loginUser(@RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+    	
+    	long idTransaccion = new Date().getTime();
+    	log.info("{} - loginUser(email: {}, password: {})",idTransaccion,email,password);
+    	
+    	GenericResponse response = new GenericResponse();
+    	response.setService("securityService_userLogin");
+    	try{
+    		
+    		User user = new User();
+        	user.setEmail(email);
+        	user.setPassword(password);
+        	user = securityService.loginUser(user);
+        	
+        	if(user == null){
+        		response.setMessageError(Constants.MSG_ERROR_USER_LOGIN);
+        	}
+    		
+    		response.setData(user);
+    		
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	log.info("{} - response - service: {}, mensajeError: {}, data: {} ",idTransaccion, response.getService(),response.getMessageError(),response.getData());
+    	
+    	return response;
+    }
+    
+}

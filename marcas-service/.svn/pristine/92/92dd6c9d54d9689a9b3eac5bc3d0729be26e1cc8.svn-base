@@ -1,0 +1,84 @@
+/**
+ * SecurityController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 24/11/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.bo.GenericResponse;
+import co.com.softone.disponible.logic.constants.Constants;
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.services.SecurityService;
+
+/**
+ * Class to produce security service json to android layer.
+ * 
+ * @author <a href="ehurtado@softone.com.co">Edwin Alejandro Hurtado</a>
+ *
+ */
+@Controller
+@RequestMapping("/securityService")
+public class SecurityController {
+
+    @Autowired
+    @Qualifier("securityService")
+    private SecurityService securityService;
+    
+    @RequestMapping(value = "allUsers", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse findAllUsers() {
+
+    	
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		List<User> users = securityService.findAllUser();
+    		
+    		response.setData(users);
+    		response.setService("securityService_allUsers");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+
+    @RequestMapping(value = "userLogin", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse loginUser(@RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+    	
+    	GenericResponse response = new GenericResponse();
+    	
+    	try{
+    		
+    		User user = new User();
+        	user.setEmail(email);
+        	user.setPassword(password);
+        	user = securityService.loginUser(user);
+        	
+        	if(user == null){
+        		response.setMessageError(Constants.MSG_ERROR_USER_LOGIN);
+        	}
+    		
+    		response.setData(user);
+    		response.setService("securityService_userLogin");
+    		
+    	}catch (Exception e) {
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	return response;
+    }
+    
+}

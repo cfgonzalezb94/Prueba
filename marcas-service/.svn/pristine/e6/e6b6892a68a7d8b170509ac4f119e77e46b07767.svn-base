@@ -1,0 +1,147 @@
+/**
+ * MenssageGcmController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 19/06/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.bo.EventUser;
+import co.com.softone.disponible.logic.bo.GenericResponse;
+import co.com.softone.disponible.logic.constants.Constants;
+import co.com.softone.disponible.logic.entities.Business;
+import co.com.softone.disponible.logic.entities.CategoryBusiness;
+import co.com.softone.disponible.logic.entities.Event;
+import co.com.softone.disponible.logic.entities.Rol;
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.exception.DisponibleBusinessException;
+import co.com.softone.disponible.logic.services.UserService;
+import co.com.softone.disponible.logic.services.WorkerService;
+import co.com.softone.disponible.service.gcm.SendMessage;
+
+/**
+ * Class to produce menssages to android layer.
+ * 
+ * @author <a href="ehurtado@softone.com.co">Edwin Alejandro Hurtado</a>
+ *
+ */
+@Controller
+@RequestMapping("/messageService")
+public class MenssageGcmController {
+	
+	private Logger log = LoggerFactory.getLogger(MenssageGcmController.class);
+	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
+	
+	@Autowired
+    @Qualifier("workerService")
+    private WorkerService workerService;
+	
+	@Autowired
+    @Qualifier("sendMessage")
+    private SendMessage sendMessage;
+	
+    /**
+     * <p>
+     * Send an information message notification to all users.
+     * </p>
+     * 
+     * @param idUser
+     * @param title
+     * @param message
+     * @return
+     */
+    @RequestMapping(value = "sendInfoMessage", method = RequestMethod.GET)
+    public @ResponseBody GenericResponse sendInfoMessage(@RequestParam(value="type") String type, @RequestParam(value="extra",defaultValue="") String extra, @RequestParam(value="title") String title, @RequestParam(value="message") String message){
+    	
+    	long idTransaccion = new Date().getTime();
+    	log.info("{} - sendInfoMessage(type: {}, title: {}, message: {})",idTransaccion,type,title,message);
+    	
+    	GenericResponse response = new GenericResponse();
+    	response.setService("messageService_sendInfoMessage");
+    	try{
+    		
+    		List<User> users = null;
+    		String result = "";
+    		if(type != null && !type.equals("")){
+    			
+    			if(type.equalsIgnoreCase("all")){
+    				
+    				users = userService.findAll();
+    				
+    			}else if(type.equalsIgnoreCase("workers")){
+    				
+    				Rol rol = userService.findRolByName(Constants.ROL_EXPERTO);
+    				users = userService.findUsersByRol(rol);
+    				
+    			}else if(type.equalsIgnoreCase("users")){
+    				
+    				Rol rol = userService.findRolByName(Constants.ROL_USUARIO);
+    				users = userService.findUsersByRol(rol);
+    				
+    			}else if(type.equalsIgnoreCase("user")){
+    				
+    				if(extra != null && !extra.equals("")){
+    					
+    					BigInteger idUser = new BigInteger(extra);
+    					users = new ArrayList<User>();
+        				User user = userService.findUserById(idUser);
+        				if(user != null)
+        					users.add(user);
+        				
+    				}else{
+    					result = "El parametro extra no puede ser nulo ni vacio, debe tener el idUse";
+    				}
+    				
+    			} else{
+    				result = "El parametro type no es correcto: (all: todos los usuarios), (workers: solo expertos), (users: solo usuarios), (user: un usuario en particular, y se debe ingresar el idUser en el parametro extra)";
+    			}
+    			
+    		}else{
+    			result = "El parametro type no puede ser nulo ni vacio";
+    		}
+    		
+    		if(result.equals("")){
+    			if(users != null && users.size() > 0){
+    				title = Constants.PREFIJO_NOTIFICACION_INFO + title;
+    	    		for(User user : users){
+    	    			sendMessage.post(idTransaccion,user.getIdUser(), title, message);
+    	    			log.info("{} - message sent to: {}",idTransaccion,user.getEmail());
+    	    		}
+        		}else{
+        			result = "No se encontró ningun usuario a enviar el mensaje.";
+        		}
+    		}
+    		
+    		response.setData(result);
+    		
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		response.setMessageError(Constants.MSG_ERROR_GENERIC);
+		}
+    	
+    	log.info("{} - response - service: {}, mensajeError: {}, data: {} ",idTransaccion, response.getService(),response.getMessageError(),response.getData());
+    	
+    	return response;
+    	
+    }
+    
+}

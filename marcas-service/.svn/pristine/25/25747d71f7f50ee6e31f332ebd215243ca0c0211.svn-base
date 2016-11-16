@@ -1,0 +1,66 @@
+//Url Login User
+localhost:8080/disponible-service/rest/securityService/userLogin?email=agaray@softone.com.co&password=clave123
+
+//Url Update Current Room
+localhost:8080/disponible-service/rest/workerService/currentRoom?idWorker=2&idRoom=2
+
+//Url Update WorkerState
+localhost:8080/disponible-service/rest/workerService/workerState?idWorker=2&idWorkerState=2&timeAutoChange=10&timeChange=1418167372723
+
+//Url find all Rooms
+localhost:8080/disponible-service/rest/workerService/findAllRoomsMap
+
+//Url find worker by name
+localhost:8080/disponible-service/rest/userService/findWorkerbyname?name=alexander
+
+//Url find all service by worker
+localhost:8080/disponible-service/rest/workerService/findWorkerService?idWorker=1
+
+//Url Save a event
+localhost:8080/disponible-service/rest/userService/saveEvent?requestTime=1418167372723&timetoarrive=10&idRoom=1&idEventState=1&idUser=3&idWorker=1
+
+//Url save user
+localhost:8080/disponible-service/rest/userService/saveUser?firstname=Daniel2&lastname=Calderon2&cellphone=3133193011&email=dcalderon@softone.com.co&password=clave123
+
+//Url find all event by worker
+localhost:8080/disponible-service/rest/workerService/findEventWorker?idWorker=1
+
+//Url cancel event
+localhost:8080/disponible-service/rest/userService/cancelEvent?idEvent=4
+
+//Url find all worker by name and business
+http://localhost:8080/disponible-service/rest/workerService/findWorkerByFirstNameAndBusiness?firstName=jaime&idBusiness=1
+
+//Url find all rooms by business
+http://localhost:8080/disponible-service/rest/workerService/findRoomsByBusiness?idBusiness=1
+
+//Url find all business
+http://localhost:8080/disponible-service/rest/userService/findAllBusiness
+
+//Url to send a notification to a user
+localhost:8080/disponible-service/rest/workerService/sendMessageGoogle?idUser=1&title=Usuario disponible&message=El usuario ya se encuentra disponible
+
+//Url update Service by worker
+localhost:8080/disponible-service/rest/workerService/addServiceWorker?idWorker=2&serviceName=Tinturas
+
+//Url delete Service by worker
+localhost:8080/disponible-service/rest/workerService/deleteServiceWorker?idWorker=2&serviceName=Tinturas
+
+//Url update Profile worker
+localhost:8080/disponible-service/rest/workerService/updateProfileWorker?idWorker=2&firstName=Alex&lastName=Pardo&cellphone=3107829872
+
+//Url save worker
+localhost:8080/disponible-service/rest/workerService/saveWorker?firstname=Daniel2&lastname=Calderon2&cellphone=3133193011&email=dcalderon2@softone.com.co&password=clave123&business=1
+
+//Url find events pending by user
+localhost:8080/disponible-service/rest/userService/findEventPendingUser?idUser=3
+
+//Url find events pending by user
+localhost:8080/disponible-service/rest/workerService/sendMessageGoogle?idUser=2&title=servicio&message=solicitodesuservicio
+
+//Url update Profile user
+localhost:8080/disponible-service/rest/userService/updateProfileUser?idUser=3&firstName=Christian&lastName=Gonzalez&cellPhone=3125073972
+
+//Url find all services by business
+http://localhost:8080/disponible-service/rest/workerService/findServicesByBusiness?idBusiness=1
+

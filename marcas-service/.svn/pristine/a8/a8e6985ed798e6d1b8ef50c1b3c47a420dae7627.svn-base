@@ -1,0 +1,102 @@
+/**
+ * WorkerController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 4/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.bo.RoomDetail;
+import co.com.softone.disponible.logic.bo.RoomMap;
+import co.com.softone.disponible.logic.bo.WorkerDetail;
+import co.com.softone.disponible.logic.services.WorkerService;
+
+/**
+ * Class to produce worker service json to android layer.
+ * 
+ * @author <a href="agaray@softone.com.co">Alexander Garay</a>
+ *
+ */
+@Controller
+@RequestMapping("/workerService")
+public class WorkerController {
+	
+	@Autowired
+    @Qualifier("workerService")
+    private WorkerService workerService;
+	
+	/**
+	 * <p>
+	 * Update the current room to the worker.
+	 * </p>
+	 * 
+	 * @param idWorker
+	 * @param idRoom
+	 * @return resultOk
+	 */
+    @RequestMapping(value = "currentRoom", method = RequestMethod.GET)
+    public @ResponseBody boolean currentRoom(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="idRoom") BigInteger idRoom) {
+    	    		
+    	 boolean result = workerService.updateCurrentRoom(idWorker, idRoom);
+    	   
+    	return result;
+
+    }
+    
+    @RequestMapping(value = "workerState", method = RequestMethod.GET)
+    public @ResponseBody boolean workerState(@RequestParam(value="idWorker") BigInteger idWorker, @RequestParam(value="idWorkerState") BigInteger idWorkerState, @RequestParam(value="timeAutoChange") Integer timeAutoChange, @RequestParam(value="timeChange") Long timeChange) {
+    	    		
+    	 boolean result = workerService.updateWorkerState(idWorker, idWorkerState, timeAutoChange, timeChange);
+    	   
+    	return result;
+
+    }
+    
+    /**
+     * <p>
+     * Find all rooms in the system to build the map.
+     * </p>
+     * 
+     * @return rooms
+     */
+    @RequestMapping(value = "findAllRoomsMap", method = RequestMethod.GET)
+    public @ResponseBody List<RoomMap> findAllRoomsMap(){
+    	return workerService.findAllRoomsMap();
+    }
+    
+    /**
+     * <p>
+     * Find a room by its location.
+     * </p>
+     * 
+     * @return rooms
+     */
+    @RequestMapping(value = "findRoomByLocation", method = RequestMethod.GET)
+    public @ResponseBody RoomDetail findRoomByLocation(@RequestParam(value="latitude") double latitude, @RequestParam(value="longitude") double longitude){
+    	return workerService.findRoomByLocation(latitude, longitude);
+    }
+    
+    /**
+     * <p>
+     * Find the worker detail by its id.
+     * </p>
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "findWorkerDetail", method = RequestMethod.GET)
+    public WorkerDetail findWorkerDetail(@RequestParam(value="idWorker") BigInteger id){
+    	return workerService.findWorkerDetail(id);
+    }
+
+}

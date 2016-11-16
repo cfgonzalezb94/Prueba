@@ -1,0 +1,58 @@
+/**
+ * SecurityController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 24/11/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.services.SecurityService;
+
+/**
+ * Class to produce security service json to android layer.
+ * 
+ * @author <a href="ehurtado@softone.com.co">Edwin Alejandro Hurtado</a>
+ *
+ */
+@Controller
+@RequestMapping("/securityService/rest")
+public class SecurityController {
+
+    @Autowired
+    @Qualifier("securityService")
+    private SecurityService securityService;
+    
+    @RequestMapping(value = "allUsers", method = RequestMethod.GET)
+    public @ResponseBody List<User> findAllUsers() {
+
+        List<User> users = securityService.findAllUser();
+        return users;
+
+    }
+    
+    @RequestMapping(value = "oneUser", method = RequestMethod.GET)
+    public @ResponseBody User findOneUser(@RequestParam(value="name", required=false, defaultValue="0") String name) {
+
+        User user = new User();
+        user.setId(new BigInteger("1"));
+        user.setPrimerApellido("Hurtado");
+        user.setPrimerNombre(name);
+        user.setSegundoApellido("Lopez");
+
+        return user;
+
+    }
+    
+}

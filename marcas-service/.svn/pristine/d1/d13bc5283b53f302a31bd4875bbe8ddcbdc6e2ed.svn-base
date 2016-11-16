@@ -1,0 +1,42 @@
+//Url Login User
+localhost:8080/disponible-service/rest/securityService/userLogin?email=agaray@softone.com.co&password=clave123
+
+//Url Update Current Room
+localhost:8080/disponible-service/rest/workerService/currentRoom?idWorker=2&idRoom=2
+
+//Url Update WorkerState
+localhost:8080/disponible-service/rest/workerService/workerState?idWorker=2&idWorkerState=2&timeAutoChange=10&timeChange=1418167372723
+
+
+//Url find all Rooms
+localhost:8080/disponible-service/rest/workerService/findAllRoomsMap
+
+//Url find worker by name
+localhost:8080/disponible-service/rest/userService/findWorkerbyname?name=alexander
+
+//Url find all service by worker
+localhost:8080/disponible-service/rest/workerService/findWorkerService?idWorker=1
+
+//Url Save a event
+localhost:8080/disponible-service/rest/userService/saveEvent?requestTime=1418167372723&timetoarrive=10&idRoom=1&idEventState=1&idUser=3&idWorker=1
+
+//Url save user
+localhost:8080/disponible-service/rest/userService/saveUser?firstname=Daniel2&lastname=Calderon2&cellphone=3133193011&email=dcalderon@softone.com.co&password=clave123
+
+//Url find all event by worker
+localhost:8080/disponible-service/rest/workerService/findEventWorker?idWorker=1
+
+//Url cancel event
+localhost:8080/disponible-service/rest/userService/cancelEvent? =4
+
+//Url to send a notification to a user
+localhost:8080/disponible-service/rest/workerService/sendMessageGoogle?idUser=1&title=Usuario disponible&message=El usuario ya se encuentra disponible
+
+//Url update Service by worker
+localhost:8080/disponible-service/rest/workerService/addServiceWorker?idWorker=2&serviceName=Tinturas
+
+//Url delete Service by worker
+localhost:8080/disponible-service/rest/workerService/deleteServiceWorker?idWorker=2&serviceName=Tinturas
+
+//Url update Profile worker
+localhost:8080/disponible-service/rest/workerService/updateProfileWorker?idWorker=2&firstName=Alex&lastName=Pardo&cellphone=3107829872

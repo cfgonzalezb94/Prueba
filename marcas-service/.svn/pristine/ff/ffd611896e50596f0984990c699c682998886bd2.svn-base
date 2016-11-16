@@ -1,0 +1,60 @@
+/**
+ * UserController.java
+ * Copyright (c) SoftOne - Disponible All rights reserved.
+ * 4/12/2014
+ * ${version}
+ */
+package co.com.softone.disponible.services.rest;
+
+
+import java.math.BigInteger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import co.com.softone.disponible.logic.entities.User;
+import co.com.softone.disponible.logic.services.UserService;
+
+/**
+ * Class to produce worker user json to android layer.
+ * 
+ * @author <a href="cgonzalez@softone.com.co">Christian Gonzalez</a>
+ *
+ */
+@Controller
+@RequestMapping("/userService")
+public class UserController {
+	
+	@Autowired
+    @Qualifier("userService")
+    private UserService userService;
+	
+    @RequestMapping(value = "findUserbyname", method = RequestMethod.GET)
+    public @ResponseBody List<User> findUserbyname(@RequestParam(value="name") String name) {
+    	List<User> listUser = userService.findWorkerByname(name);    	   
+    	return listUser;
+    }
+    
+    @RequestMapping(value = "saveEvent", method = RequestMethod.GET)
+    public @ResponseBody boolean saveEvent(@RequestParam(value="requestTime") Long requestTime, @RequestParam(value="timetoarrive") Integer timetoarrive, @RequestParam(value="idRoom") BigInteger idRoom, @RequestParam(value="idEventState") BigInteger idEventState, @RequestParam(value="idUser") BigInteger idUser, @RequestParam(value="idWorker") BigInteger idWorker ) {
+    	    		
+    	 boolean result = userService.saveEvent(requestTime, timetoarrive, idRoom, idEventState, idUser, idWorker);
+    	 
+    	return result;
+
+    }
+    
+    @RequestMapping(value = "saveUser", method = RequestMethod.GET)
+    public @ResponseBody String saveUser(@RequestParam(value="firstname") String firstname, @RequestParam(value="lastname") String lastname, @RequestParam(value="cellphone") BigInteger cellphone, @RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+       String saveUser = userService.saveUser(firstname, lastname, cellphone, email, password);         
+       return saveUser;
+      
+    }
+ 
+}
