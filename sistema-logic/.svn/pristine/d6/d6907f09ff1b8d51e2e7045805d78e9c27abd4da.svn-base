@@ -1,0 +1,283 @@
+/**
+ * GeneralServiceImpl.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+import co.com.softone.ingesoft.logic.entities.DetallesAdicionale;
+import co.com.softone.ingesoft.logic.entities.EstadoFactura;
+import co.com.softone.ingesoft.logic.entities.Factura;
+import co.com.softone.ingesoft.logic.entities.FormaPago;
+import co.com.softone.ingesoft.logic.entities.Item;
+import co.com.softone.ingesoft.logic.repositories.ClienteRepository;
+import co.com.softone.ingesoft.logic.repositories.DetallesAdicionaleRepository;
+import co.com.softone.ingesoft.logic.repositories.EstadoFacturaRepository;
+import co.com.softone.ingesoft.logic.repositories.FacturaRepository;
+import co.com.softone.ingesoft.logic.repositories.FormaPagoRepository;
+import co.com.softone.ingesoft.logic.repositories.ItemRepository;
+import co.com.softone.ingesoft.logic.services.GeneralService;
+
+/**
+ * <p>
+ * Servicios generales del sistema.
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ */
+@Service("generalService")
+@Transactional
+public class GeneralServiceImpl implements GeneralService {
+
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private FormaPagoRepository formaPagoRepository;
+	
+	@Autowired
+	private FacturaRepository facturaRepository;
+	
+	@Autowired
+	private ItemRepository itemRepository;
+	
+	@Autowired
+	private EstadoFacturaRepository estadoFacturaRepository;
+	
+	@Autowired
+	private DetallesAdicionaleRepository detallesAdicionaleRepository;
+	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findClienteByRazonSocial(String)
+	 */
+	@Override
+	public Cliente findClienteByRazonSocial(String razonSocial){
+		return clienteRepository.findByRazonSocial(razonSocial);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findAllClientes()
+	 */
+	@Override
+	public List<Cliente> findAllClientes(){
+		return clienteRepository.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findAllFormasPago()
+	 */
+	@Override
+	public List<FormaPago> findAllFormasPago(){
+		return formaPagoRepository.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#saveCliente()
+	 */
+	@Override
+	public Cliente saveCliente(Cliente cliente){
+		return clienteRepository.save(cliente);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findFormaPagoById()
+	 */
+	@Override
+	public FormaPago findFormaPagoById(Integer idFormaPago){
+		return formaPagoRepository.findOne(idFormaPago);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#deleteCliente()
+	 */
+	@Override
+	public boolean deleteCliente(Cliente cliente){
+		boolean borro;
+		try {
+			clienteRepository.delete(cliente);
+			borro = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			borro = false;
+		}
+		return borro;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findFacturasByIdCliente()
+	 */
+	@Override
+	public List<Factura> findFacturasByIdCliente(Integer idCliente){
+		Cliente cliente = clienteRepository.findOne(idCliente);
+		return facturaRepository.findByCliente(cliente);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findClienteById()
+	 */
+	@Override
+	public Cliente findClienteById(Integer idCliente){
+		return clienteRepository.findOne(idCliente);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#saveItem()
+	 */
+	@Override
+	public Item saveItem(Item item){
+		return itemRepository.save(item);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#saveFactura()
+	 */
+	@Override
+	public Factura saveFactura(Factura factura){
+		return facturaRepository.save(factura);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findEstadoFacturaByNombre()
+	 */
+	@Override
+	public 	EstadoFactura findEstadoFacturaByNombre(String nombre){
+		return estadoFacturaRepository.findByNombre(nombre);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findItemsByFactura()
+	 */
+	@Override
+	public List<Item> findItemsByFactura(Factura factura){
+		return itemRepository.findByFactura(factura);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#deleteItem()
+	 */
+	@Override
+	public boolean deleteItem(Item item){
+		boolean borro;
+		try {
+			itemRepository.delete(item);
+			borro = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			borro = false;
+		}
+		return borro;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findDetallesByFactura()
+	 */
+	@Override
+	public List<DetallesAdicionale> findDetallesByFactura(Factura factura){
+		return detallesAdicionaleRepository.findByFactura(factura);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#saveDetallesAdicionale()
+	 */
+	@Override
+	public DetallesAdicionale saveDetallesAdicionale(DetallesAdicionale detallesAdicionale){
+		return detallesAdicionaleRepository.save(detallesAdicionale);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#deleteDetallesAdicionale()
+	 */
+	@Override
+	public boolean deleteDetallesAdicionale(DetallesAdicionale detalleAdicional){
+		boolean borro;
+		try {
+			detallesAdicionaleRepository.delete(detalleAdicional);
+			borro = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			borro = false;
+		}
+		return borro;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findAllEstadoFactura()
+	 */
+	@Override
+	public List<EstadoFactura> findAllEstadoFactura(){
+		return estadoFacturaRepository.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findEstadoFacturaById()
+	 */
+	@Override
+	public 	EstadoFactura findEstadoFacturaById(Integer idFactura){
+		return estadoFacturaRepository.findOne(idFactura);
+	}
+}

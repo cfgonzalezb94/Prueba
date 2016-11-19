@@ -1,0 +1,114 @@
+/**
+ * GeneralServiceImpl.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+import co.com.softone.ingesoft.logic.entities.FormaPago;
+import co.com.softone.ingesoft.logic.repositories.ClienteRepository;
+import co.com.softone.ingesoft.logic.repositories.FormaPagoRepository;
+import co.com.softone.ingesoft.logic.services.GeneralService;
+
+/**
+ * <p>
+ * Servicios generales del sistema.
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ */
+@Service("generalService")
+@Transactional
+public class GeneralServiceImpl implements GeneralService {
+
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private FormaPagoRepository formaPagoRepository;
+	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findClienteByRazonSocial(String)
+	 */
+	@Override
+	public Cliente findClienteByRazonSocial(String razonSocial){
+		return clienteRepository.findByRazonSocial(razonSocial);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findAllClientes()
+	 */
+	@Override
+	public List<Cliente> findAllClientes(){
+		return clienteRepository.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findAllFormasPago()
+	 */
+	@Override
+	public List<FormaPago> findAllFormasPago(){
+		return formaPagoRepository.findAll();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#saveCliente()
+	 */
+	@Override
+	public Cliente saveCliente(Cliente cliente){
+		return clienteRepository.save(cliente);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findFormaPagoById()
+	 */
+	@Override
+	public FormaPago findFormaPagoById(Integer idFormaPago){
+		return formaPagoRepository.findOne(idFormaPago);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#deleteCliente()
+	 */
+	@Override
+	public boolean deleteCliente(Cliente cliente){
+		boolean borro;
+		try {
+			clienteRepository.delete(cliente);
+			borro = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			borro = false;
+		}
+		return borro;
+	}
+}

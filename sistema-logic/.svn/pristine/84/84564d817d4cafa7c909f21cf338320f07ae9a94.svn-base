@@ -1,0 +1,3 @@
+#Configuracion Log
+log.logic.config.category = co.com.softone.tuimpuesto.logic
+log.web.config.category = co.com.softone.tuimpuesto.web

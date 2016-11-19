@@ -1,0 +1,80 @@
+/**
+ * GeneralService.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.services;
+
+import java.util.List;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+import co.com.softone.ingesoft.logic.entities.FormaPago;
+
+
+/**
+ * 
+ * <p>
+ * Servicios generales del sistema.
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ */
+public interface GeneralService {
+
+	/**
+	 * <p>
+	 * Permite consultar los datos de un Cliente en la base de datos dado su razon social
+	 * </p> 
+	 * @param razonSocial
+	 * @return Cliente
+	 */
+	Cliente findClienteByRazonSocial(String razonSocial);
+	
+	/**
+	 * <p>
+	 * Permite consultar todos los clientes en la base de datos
+	 * </p> 
+	 * 
+	 * @return List<Cliente>
+	 */
+	List<Cliente> findAllClientes();
+	
+	/**
+	 * <p>
+	 * Permite consultar todos las formas de pago que tiene un cliente
+	 * </p> 
+	 * 
+	 * @return List<FormaPago>
+	 */
+	List<FormaPago> findAllFormasPago();
+	
+	/**
+	 * <p>
+	 * Permite guardar el cliente en la base de datos
+	 * </p> 
+	 * 
+	 * @return Cliente
+	 */
+	Cliente saveCliente(Cliente cliente);
+	
+	/**
+	 * <p>
+	 * Permite consultar una forma de pago por id
+	 * </p> 
+	 * 
+	 * @return FormaPago
+	 */
+	FormaPago findFormaPagoById(Integer idFormaPago);
+	
+	/**
+	 * <p>
+	 * Permite eliminar un cliente
+	 * </p> 
+	 * 
+	 * @return Boolean
+	 */
+	boolean deleteCliente(Cliente cliente);
+	
+}

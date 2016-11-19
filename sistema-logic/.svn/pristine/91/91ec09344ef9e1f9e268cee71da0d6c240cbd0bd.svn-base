@@ -1,0 +1,57 @@
+/**
+ * GeneralServiceImpl.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+import co.com.softone.ingesoft.logic.repositories.ClienteRepository;
+import co.com.softone.ingesoft.logic.services.GeneralService;
+
+/**
+ * <p>
+ * Servicios generales del sistema.
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ */
+@Service("generalService")
+@Transactional
+public class GeneralServiceImpl implements GeneralService {
+
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findClienteByRazonSocial(String)
+	 */
+	@Override
+	public Cliente findClienteByRazonSocial(String razonSocial){
+		return clienteRepository.findByRazonSocial(razonSocial);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.softone.ingesoft.logic.services.GeneralService#findAllClientes()
+	 */
+	@Override
+	public List<Cliente> findAllClientes(){
+		return clienteRepository.findAll();
+	}
+}

@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Bienvenido a TuImpuesto Pro</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+	<style type="text/css">
+		/*  The ReadMsgBody and ExternalClass styling below forces Outlook to display the emails at full width */
+		/* Something with the class Outlook automatically adds to the email template body */                     
+		.ReadMsgBody    {width:100%;background-color:#ffffff;}                                
+		.ExternalClass  {width:100%;background-color:#ffffff;}                        
+		body            {width:100%;background-color:#ffffff;margin:0;padding:0;-webkit-font-smoothing:antialiased;font-family:'Avenir Next',Helvetica,sans-serif;text-align:center!important}/* Force body to span across the width of the rendering device */
+		table           {border-collapse: collapse;text-align:center!important;}                                                                              
+		.centerOnMobile {text-align:left;}/* Center the elements with this class in the center of the page on small screen sizes */                                                                                                 
+		p {font-family:'Avenir Next',Helvetica,sans-serif;line-height:20px;margin:0 0 10px;font-size:14px;color:#363636;}/* Set default styling for paragraphs*/
+		.footerTextPadding {padding:40px;}
+		.bulletPt{font-size:6px!important;color:#363636!important;}
+		.zeroPadding{padding:0!important;margin:0!important;}
+			
+	  /* Media queries start here */
+		/*Device screen less than or equal to 640 pixels */                                                         
+		@media only screen and (max-width: 640px)  {
+			body[yahoo] .deviceWidth {width:480px!important;padding:0;}                                                 
+			body[yahoo] .center {text-align:center!important;}                                                          
+			.stackedColumn {width:100%!important;text-align:center!important;}
+			p {font-family:'Avenir Next',Helvetica,sans-serif;line-height:22px!important;margin-bottom: 10px;font-size:16px!important;color:#363636;}                                                                        
+			.centerOnMobile {text-align:center;}
+			.sidePadding {padding:0 30px!important;} /* This is to reduce the padding by the side of the contents for smaller screen sizes */
+			.responsiveImg {width:100%!important;padding-bottom:10px!important;} /* This is to increase the size of the Nanodegree image on a smaller screen */
+			.responsiveHeaderText{font-size:24px!important;}
+			.footnote {font-size:14px!important;line-height:20px;}/* This is to increase the size of the footnote a little on small screen devices */
+			.hideOnMobile {display:none!important;}
+			.footerTextPadding {padding:5px 20px!important;}
+			.zeroMobilePadding{padding:0!important;}
+			a {text-decoration:none!important;}
+		}                                                                                                                                                                                                                                 
+
+		/* Device screen less than or equal to 480px */
+		@media only screen and (max-width: 480px) {
+			body[yahoo] .deviceWidth {width:320px!important;padding:0;}  
+			body[yahoo] .center {text-align:center!important;}  
+			.stackedColumn {width:100%!important;text-align:center!important;}
+			p {font-family:'Avenir Next',Helvetica,sans-serif;line-height:22px!important;margin-bottom: 10px;font-size:16px!important;color:#363636;}
+			.centerOnMobile {text-align:center;}
+			.sidePadding {padding:0 30px!important;} /* This is to reduce the padding by the side of the contents for smaller screen sizes */
+			.responsiveImg {width:100%!important;padding-bottom:10px!important;} /* This is to increase the size of the Nanodegree image on a smaller screen */
+			.responsiveHeaderText{font-size:24px!important;} /*  This styling is to reduce the size of the header text in smaller screen sizes so the mockup style can be matched */
+															 
+			.footnote {font-size:14px!important;line-height:20px;}/* This is to increase the size of the footnote a little on small screen devices */
+			.hideOnMobile {display:none!important;}
+			.footerTextPadding {padding:5px 20px!important;}
+			.zeroMobilePadding{padding:0!important;}
+		}
+		/* Media queries end here */
+	</style>
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" style="font-family:'Avenir Next',Helvetica,sans-serif; " align="center" >
+	<div >
+		<!-- GREY BG TABLE WRAPPING ALL THE EMAIL TEMPLATE STARTS HERE -->
+		<table border="0" cellspacing="0" cellpadding="0" width="100%" align="center" bgcolor="#E6E6E6" >
+			<tbody >
+				<tr >
+					<td width="100%" align="center" valign="top" bgcolor="#E6E6E6" >
+						<!-- MAIL CONTENTS WRAPPER STARTS HERE-->
+						<table style="max-width:600px; " border="0" cellspacing="0" cellpadding="0" width="100%" align="center" >
+							<tbody >
+								<tr >
+									<td style="padding-top:20px; " width="98%" align="center" valign="top" >
+										<!-- HEADER STARTS HERE -->
+										<table class="deviceWidth" border="0" cellspacing="0" cellpadding="0" width="600" align="center" >
+											<tbody >
+												<!-- PREVIEW TEXT STARTS HERE -->
+												<tr>
+													<td>
+														<div style="display: none; font-size: 1px; color: #ffffff; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+															Bienvenido a TuImpuesto Pro ${firstName} !
+														</div>
+													</td>
+												</tr>
+												<!-- PREVIEW TEXT ENDS HERE -->
+												<!-- Vertical spacing starts here -->
+												<tr>
+													<td style="height: 30px;" align="center">&nbsp;</td>
+												</tr>
+												<!-- Vertical spacing ends here -->
+												<tr >
+													<td width="100%" align="center" bgcolor="white" >
+														<!-- TUIMPUESTO LOGO AND LARGE PROMOTION IMAGE SECTION -->
+														<table class="deviceWidth" border="0" cellspacing="0" cellpadding="0" align="center" >
+															<tbody >
+																<!-- Vertical spacing starts here -->
+																<tr>
+																	<td style="height: 10px;" align="center">&nbsp;</td>
+																</tr>
+																<!-- Vertical spacing ends here -->
+																<tr >
+																	<td style="padding:0; " width="100%" align="center" valign="top" bgcolor="#FFFFFF" >
+																		<div class="mktEditable" id="banner" >
+																			<img class="deviceWidth" style="display: block; max-width: 600px;" src="https://www.tuimpuesto.com/img/tuImpuesto/logo-pro-335x110.png" border="0" alt="" width="400">
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+														<!-- TUIMPUESTO LOGO AND LARGE PROMOTION IMAGE SECTION -->
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<!-- HEADER ENDS HERE -->
+										<!-- INTRO-TEXT SECTION STARTS HERE -->
+										<table class="deviceWidth" border="0" cellspacing="0" cellpadding="0" width="600" align="center" bgcolor="#FFFFFF" >
+											<tbody >
+												<!-- Vertical spacing starts here -->
+												<tr>
+													<td style="height: 30px;" align="center">&nbsp;</td>
+												</tr>
+												<!-- Vertical spacing ends here -->
+												<tr >
+													<td class="sidePadding" style="padding:0 40px; " align="center" bgcolor="#FFFFFF" >
+														<table align="center" >
+															<tbody >
+																<tr>
+																	<td align="center" style="font-size:28px;padding-top:0;padding-bottom:10px;font-family:'Avenir Next',Helvetica,sans-serif!important;color:#307699 ;line-height:38px;" class="responsiveHeaderText">
+																		Bienvenido ${firstName}
+																	</td>
+																</tr>
+																<tr >
+																	<td style="font-family:'Avenir Next',Helvetica,sans-serif; font-size:14px; color:#363636; line-height:20px; " align="left" >
+																		<p>&iexcl;Gracias por registrarse en <b><a href="http://pro.tuimpuesto.com/">pro.tuimpuesto.com</a></b>!</p>
+																		<p>Ya puede comenzar a preparar los impuestos de sus clientes de una manera productiva y as&iacute; responder a las realidades competitivas del mercado actual en la gesti&oacute;n tributaria y contable de sus clientes; aumentando sus ingresos.</p>
+																		<p></p>
+																		<p>Con <b>TuImpuesto Pro</b> obtienes:</p>
+																		<div class="mktEditable" >
+																			<ul>
+																				<li style="text-align: justify;">
+																					<strong>Administraci&oacute;n de clientes</strong> 
+																				</li>
+																				<li>
+																					<strong>Administraci&oacute;n de proyectos</strong> 
+																				</li>
+																				<li>
+																					<strong>Calendario tributario automatizado por cada impuesto</strong> 
+																				</li>
+																				<li>
+																					<strong>Preparaci&oacute;n de impuestos</strong> 
+																					<ul>
+																						<li>
+																							<strong>Persona natural</strong> 
+																							<ul>
+																								<li>
+																									Declaraci&oacute;n de Renta. Formulario 210, 230 y 240
+																								</li>
+																								<li>
+																									Declaraci&oacute;n de Renta (Obligados a llevar contabilidad) Formulario 110
+																								</li>
+																								<li>
+																									Declaraci&oacute;n del Impuesto a la Riqueza. Formulario 440
+																								</li>
+																								<li>
+																									Impuesto sobre las Ventas IVA. Formulario 300
+																								</li>
+																								<li>
+																									Retenciones en la Fuente. Formulario 350
+																								</li>
+																								<li>
+																									Declaraci&oacute;n Anual de Activos en el Exterior. Formulario 160
+																								</li>
+																								
+																							</ul>
+																						</li>
+																						<li>
+																							<strong>Persona jur&iacute;dica</strong> 
+																							<ul>
+																								<li>
+																									Declaraci&oacute;n de Renta. Formulario 110
+																								</li>
+																								<li>
+																									Impuesto sobre las Ventas IVA. Formulario 300
+																								</li>
+																								<li>
+																									Retenciones en la Fuente. Formulario 350
+																								</li>
+																								<li>
+																									Autorretenci&oacute;n del CREE. Formulario 360
+																								</li>
+																								<li>
+																									Impuesto Sobre la Renta para la Equidad CREE. Formulario 140
+																								</li>
+																								<li>
+																									Declaraci&oacute;n del Impuesto a la Riqueza. Formulario 440
+																								</li>
+																								<li>
+																									Declaraci&oacute;n Anual de Activos en el Exterior. Formulario 160
+																								</li>
+																							</ul>
+																						</li>
+																					</ul>
+																				</li>
+																			</ul>
+																			
+																		</div>
+
+																		<p>Si realiza su suscripci&oacute;n, adem&aacute;s obtiene:</p>
+																		<div class="mktEditable" >
+																			<ul>
+																				<li style="text-align: justify;">
+																					<strong>Generaci&oacute;n de facturas y cuentas de cobro</strong> 
+																				</li>
+																				<li>
+																					<strong>Envi&oacute; de notificaciones</strong> 
+																					<ul>
+																						<li>
+																							<strong>Vencimiento de impuestos</strong> 
+																						</li>
+																						<li>
+																							<strong>Vencimiento de facturas y cuentas de cobro</strong> 
+																						</li>
+																					</ul>
+																				</li>
+																				<li>
+																					<strong>Calendario personalizado por cada cliente</strong> 
+																				</li>
+																				<li>
+																					<strong>Soporte tributario especializado en l&iacute;nea</strong> 
+																				</li>
+																				<li>
+																					<strong>Generaci&oacute;n de estad&iacute;sticas</strong> 
+																				</li>
+																				<li>
+																					<strong>Descarga formulario borrador de la DIAN</strong> 
+																				</li>
+																				<li>
+																					<strong>Diligencie formularios de la DIAN desde TuImpuesto Pro</strong> 
+																				</li>
+																				<li>
+																					<strong>Descarga informe detallado de la preparaci&oacute;n de los impuestos</strong> 
+																				</li>
+																			</ul>
+																			
+																		</div>
+
+
+																		<p><p>&nbsp;</p>
+																		
+																		<div class="mktEditable" >
+																			Si tiene alguna duda, sugerencia o mejora no dude en contactarnos a <a href="mailto:info@tuimpuesto.com">info@tuimpuesto.com</a>.</div>
+																		<p>Sus comentarios son muy importantes para nosotros. </p>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+												<!-- Vertical spacing starts here -->
+												<tr>
+													<td style="height: 20px;" align="center">&nbsp;</td>
+												</tr>
+												<!-- Vertical spacing ends here -->
+											</tbody>
+										</table>
+										<!-- NANODEGREE NOW OPEN FOR ENROLLMENT SECTION STARTS HERE  -->
+										<!-- NANODEGREE NOW OPEN FOR ENROLLMENT SECTION ENDS HERE -->
+										<!-- ...AND MORE..LINKS STARTS HERE -->
+										<!-- ...AND MORE...LINKS END HERE -->
+										<!-- LIGHTER GREY BG FOOTER STARTS HERE -->
+										<table class="deviceWidth" border="0" cellspacing="0" cellpadding="0" width="600" align="center" bgcolor="#F3F3F3">
+											<tbody>
+												<tr>
+													<td style="padding: 0 40px;" align="center">
+														<table>
+															<!-- Vertical spacing starts here -->
+															<tbody>
+																<tr>
+																	<td style="height: 30px;" align="center">&nbsp;</td>
+																</tr>
+																<!-- Vertical spacing ends here -->
+																<tr>
+																	<td style="font-family: 'Avenir Next',Helvetica,sans-serif; font-size: 14px; text-decoration: none; line-height: 20px; color: #363636; padding: 0;" align="center">
+																		<p>Visita nuestro sitio <a style="text-decoration: none; color: #307699;" href="https://www.tuimpuesto.com/">www.tuimpuesto.com</a></p>
+																	</td>
+																</tr>
+																<tr>
+																	<td style="font-family: 'Avenir Next',Helvetica,sans-serif; font-size: 14px; line-height: 20px; color: #363636;" align="center">
+																		<p class="zeroPadding">Siganos en</p>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="center" style="vertical-align: top; text-align: center; padding-bottom: 10px;" align="center" valign="top">
+																		<a style="margin: 0 2px; color: transparent; text-decoration: none!important;" href="https://www.facebook.com/Tuimpuesto">
+																			<img src="https://www.tuimpuesto.com/img/email/social-facebook_2x.gif" border="0" alt="Facebook icon" width="42" height="42">
+																		</a>
+																		<span class="hideOnMobile" style="color: #f3f3f3;">&nbsp;</span> 
+																		<a style="margin: 0 2px; color: transparent; text-decoration: none!important;"  href="https://twitter.com/_TuImpuesto">
+																			<img src="https://www.tuimpuesto.com/img/email/social_twitter_2x.gif" border="0" alt="Twitter icon" width="42" height="42">
+																		</a>
+																		<span class="hideOnMobile" style="color: #f3f3f3;">&nbsp;</span>
+																	</td>
+																</tr>
+																<!-- Vertical spacing starts here -->
+																<tr>
+																	<td style="height: 30px;" align="center">&nbsp;</td>
+																</tr>
+																<!-- Vertical spacing ends here -->
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<!-- LIGHTER GREY BG FOOTER ENDS HERE -->
+										<!-- LAST BODY FOOTER STARTS HERE  --><br>
+										<table class="deviceWidth" border="0" cellspacing="0" cellpadding="0" width="600" align="center">
+											<tbody>
+												<!-- Vertical spacing starts here -->
+												<tr>
+													<td style="height: 30px;" align="center">&nbsp;</td>
+												</tr>
+												<!-- Vertical spacing ends here -->
+												<tr>
+													<td align="center">&nbsp;</td>
+												</tr>
+												</tbody>
+										</table>
+									<!-- LAST BODY FOOTER ENDS HERE -->
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- MAIL CONTENTS WRAPPER ENDS HERE -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- GREY BG TABLE WRAPPING ALL THE EMAIL TEMPLATE ENDS HERE -->
+	</div>
+	<p>
+		<font face="Verdana" size="1">
+			www.tuimpuesto.com Todos los derechos reservados.
+		</font>
+	</p>
+</body>
+</html>

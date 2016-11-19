@@ -1,0 +1,79 @@
+package co.com.softone.ingesoft.logic.entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the retencion database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Retencion.findAll", query="SELECT r FROM Retencion r")
+public class Retencion implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Lob
+	private String descripcion;
+
+	private String nombre;
+
+	//bi-directional many-to-one association to ClienteRetencion
+	@OneToMany(mappedBy="retencion")
+	private List<ClienteRetencion> clienteRetencions;
+
+	public Retencion() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<ClienteRetencion> getClienteRetencions() {
+		return this.clienteRetencions;
+	}
+
+	public void setClienteRetencions(List<ClienteRetencion> clienteRetencions) {
+		this.clienteRetencions = clienteRetencions;
+	}
+
+	public ClienteRetencion addClienteRetencion(ClienteRetencion clienteRetencion) {
+		getClienteRetencions().add(clienteRetencion);
+		clienteRetencion.setRetencion(this);
+
+		return clienteRetencion;
+	}
+
+	public ClienteRetencion removeClienteRetencion(ClienteRetencion clienteRetencion) {
+		getClienteRetencions().remove(clienteRetencion);
+		clienteRetencion.setRetencion(null);
+
+		return clienteRetencion;
+	}
+
+}

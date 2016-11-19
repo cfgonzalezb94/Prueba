@@ -1,0 +1,43 @@
+/**
+ * GeneralService.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.services;
+
+import java.util.List;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+
+
+/**
+ * 
+ * <p>
+ * Servicios generales del sistema.
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ */
+public interface GeneralService {
+
+	/**
+	 * <p>
+	 * Permite consultar los datos de un Cliente en la base de datos dado su razon social
+	 * </p> 
+	 * @param razonSocial
+	 * @return Cliente
+	 */
+	Cliente findClienteByRazonSocial(String razonSocial);
+	
+	/**
+	 * <p>
+	 * Permite consultar todos los clientes en la base de datos
+	 * </p> 
+	 * 
+	 * @return List<Cliente>
+	 */
+	List<Cliente> findAllClientes();
+	
+}

@@ -1,0 +1,82 @@
+package co.com.softone.ingesoft.logic.entities;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+import java.util.List;
+
+
+/**
+ * The persistent class for the forma_pago database table.
+ * 
+ */
+@Entity
+@Table(name="forma_pago")
+@NamedQuery(name="FormaPago.findAll", query="SELECT f FROM FormaPago f")
+public class FormaPago implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Lob
+	private String descripcion;
+
+	private String nombre;
+
+	//bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy="formaPago")
+	private List<Cliente> clientes;
+
+	public FormaPago() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<Cliente> getClientes() {
+		return this.clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	public Cliente addCliente(Cliente cliente) {
+		getClientes().add(cliente);
+		cliente.setFormaPago(this);
+
+		return cliente;
+	}
+
+	public Cliente removeCliente(Cliente cliente) {
+		getClientes().remove(cliente);
+		cliente.setFormaPago(null);
+
+		return cliente;
+	}
+
+}

@@ -1,0 +1,35 @@
+/**
+ * FacturaRepository.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.repositories;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+import co.com.softone.ingesoft.logic.entities.Factura;
+
+/**
+ * <p>
+ * Repositorio para la entidad {@link Factura}
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ * 
+ */
+@Repository
+public interface FacturaRepository extends JpaRepository<Factura, Integer> {
+	
+		
+	/**
+	 * <p>Busca una lista de facturas por cliente</p>
+	 */
+	List<Factura> findByCliente(Cliente cliente);
+	
+}

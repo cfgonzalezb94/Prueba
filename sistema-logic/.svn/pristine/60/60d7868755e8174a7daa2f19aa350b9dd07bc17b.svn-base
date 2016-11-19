@@ -1,0 +1,34 @@
+/**
+ * DetallesAdicionaleRepository.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.repositories;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import co.com.softone.ingesoft.logic.entities.Factura;
+import co.com.softone.ingesoft.logic.entities.DetallesAdicionale;
+
+/**
+ * <p>
+ * Repositorio para la entidad {@link DetallesAdicionale}
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ * 
+ */
+@Repository
+public interface DetallesAdicionaleRepository extends JpaRepository<DetallesAdicionale, Integer> {
+	
+	/**
+	 * <p>Busca una lista de DetallesAdicionale por factura</p>
+	 */
+	List<DetallesAdicionale> findByFactura(Factura factura);
+	
+}

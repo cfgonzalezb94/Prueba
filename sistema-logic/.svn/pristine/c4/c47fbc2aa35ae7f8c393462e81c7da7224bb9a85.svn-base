@@ -1,0 +1,26 @@
+/**
+ * FormaPagoRepository.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import co.com.softone.ingesoft.logic.entities.FormaPago;
+
+/**
+ * <p>
+ * Repositorio para la entidad {@link FormaPago}
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ * 
+ */
+@Repository
+public interface FormaPagoRepository extends JpaRepository<FormaPago, Integer> {
+	
+}

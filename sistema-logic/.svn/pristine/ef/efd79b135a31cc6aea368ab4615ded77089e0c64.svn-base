@@ -1,0 +1,192 @@
+package co.com.softone.ingesoft.logic.entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+/**
+ * The persistent class for the cliente database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
+public class Cliente implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private Boolean autoretenedor;
+
+	private String ciudad;
+
+	private String codigo;
+
+	private String direccion;
+
+	private String dv;
+
+	private String email;
+
+	private String nit;
+
+	@Column(name="RAZON_SOCIAL")
+	private String razonSocial;
+
+	private BigInteger telefono;
+
+	//bi-directional many-to-one association to FormaPago
+	@ManyToOne
+	@JoinColumn(name="ID_FORMA_PAGO")
+	private FormaPago formaPago;
+
+	//bi-directional many-to-one association to ClienteRetencion
+	@OneToMany(mappedBy="cliente")
+	private List<ClienteRetencion> clienteRetencions;
+
+	//bi-directional many-to-one association to Factura
+	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	private List<Factura> facturas;
+
+	public Cliente() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getAutoretenedor() {
+		return this.autoretenedor;
+	}
+
+	public void setAutoretenedor(Boolean autoretenedor) {
+		this.autoretenedor = autoretenedor;
+	}
+
+	public String getCiudad() {
+		return this.ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public String getCodigo() {
+		return this.codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getDireccion() {
+		return this.direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getDv() {
+		return this.dv;
+	}
+
+	public void setDv(String dv) {
+		this.dv = dv;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNit() {
+		return this.nit;
+	}
+
+	public void setNit(String nit) {
+		this.nit = nit;
+	}
+
+	public String getRazonSocial() {
+		return this.razonSocial;
+	}
+
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	public BigInteger getTelefono() {
+		return this.telefono;
+	}
+
+	public void setTelefono(BigInteger telefono) {
+		this.telefono = telefono;
+	}
+
+	public FormaPago getFormaPago() {
+		return this.formaPago;
+	}
+
+	public void setFormaPago(FormaPago formaPago) {
+		this.formaPago = formaPago;
+	}
+
+	public List<ClienteRetencion> getClienteRetencions() {
+		return this.clienteRetencions;
+	}
+
+	public void setClienteRetencions(List<ClienteRetencion> clienteRetencions) {
+		this.clienteRetencions = clienteRetencions;
+	}
+
+	public ClienteRetencion addClienteRetencion(ClienteRetencion clienteRetencion) {
+		getClienteRetencions().add(clienteRetencion);
+		clienteRetencion.setCliente(this);
+
+		return clienteRetencion;
+	}
+
+	public ClienteRetencion removeClienteRetencion(ClienteRetencion clienteRetencion) {
+		getClienteRetencions().remove(clienteRetencion);
+		clienteRetencion.setCliente(null);
+
+		return clienteRetencion;
+	}
+
+	public List<Factura> getFacturas() {
+		return this.facturas;
+	}
+
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
+	}
+
+	public Factura addFactura(Factura factura) {
+		getFacturas().add(factura);
+		factura.setCliente(this);
+
+		return factura;
+	}
+
+	public Factura removeFactura(Factura factura) {
+		getFacturas().remove(factura);
+		factura.setCliente(null);
+
+		return factura;
+	}
+
+}

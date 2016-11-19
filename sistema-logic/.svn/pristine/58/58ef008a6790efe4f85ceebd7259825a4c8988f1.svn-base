@@ -1,0 +1,32 @@
+/**
+ * EstadoFacturaRepository.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import co.com.softone.ingesoft.logic.entities.EstadoFactura;
+
+/**
+ * <p>
+ * Repositorio para la entidad {@link EstadoFactura}
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ * 
+ */
+@Repository
+public interface EstadoFacturaRepository extends JpaRepository<EstadoFactura, Integer> {
+	
+		
+	/**
+	 * <p>Busca un estado factura by nombre</p>
+	 */
+	EstadoFactura findByNombre(String nombre);
+	
+}

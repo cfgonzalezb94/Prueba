@@ -1,0 +1,191 @@
+/**
+ * GeneralService.java
+ * Copyright (c) SoftOne
+ * 27/04/2016
+ * 1.0
+ */
+package co.com.softone.ingesoft.logic.services;
+
+import java.util.List;
+
+import co.com.softone.ingesoft.logic.entities.Cliente;
+import co.com.softone.ingesoft.logic.entities.DetallesAdicionale;
+import co.com.softone.ingesoft.logic.entities.EstadoFactura;
+import co.com.softone.ingesoft.logic.entities.Factura;
+import co.com.softone.ingesoft.logic.entities.FormaPago;
+import co.com.softone.ingesoft.logic.entities.Item;
+
+
+/**
+ * 
+ * <p>
+ * Servicios generales del sistema.
+ * </p>
+ * 
+ * @author <a <href="cgonzalez@softone.com.co">Christian Ferney Gonzalez</a>
+ * @version 1.0
+ */
+public interface GeneralService {
+
+	/**
+	 * <p>
+	 * Permite consultar los datos de un Cliente en la base de datos dado su razon social
+	 * </p> 
+	 * @param razonSocial
+	 * @return Cliente
+	 */
+	Cliente findClienteByRazonSocial(String razonSocial);
+	
+	/**
+	 * <p>
+	 * Permite consultar todos los clientes en la base de datos
+	 * </p> 
+	 * 
+	 * @return List<Cliente>
+	 */
+	List<Cliente> findAllClientes();
+	
+	/**
+	 * <p>
+	 * Permite consultar todos las formas de pago que tiene un cliente
+	 * </p> 
+	 * 
+	 * @return List<FormaPago>
+	 */
+	List<FormaPago> findAllFormasPago();
+	
+	/**
+	 * <p>
+	 * Permite guardar el cliente en la base de datos
+	 * </p> 
+	 * 
+	 * @return Cliente
+	 */
+	Cliente saveCliente(Cliente cliente);
+	
+	/**
+	 * <p>
+	 * Permite consultar una forma de pago por id
+	 * </p> 
+	 * 
+	 * @return FormaPago
+	 */
+	FormaPago findFormaPagoById(Integer idFormaPago);
+	
+	/**
+	 * <p>
+	 * Permite eliminar un cliente
+	 * </p> 
+	 * 
+	 * @return Boolean
+	 */
+	boolean deleteCliente(Cliente cliente);
+	
+	/**
+	 * <p>
+	 * Permite consultar una lista de facturas por id del cliente
+	 * </p> 
+	 * 
+	 * @return List<Factura>
+	 */
+	List<Factura> findFacturasByIdCliente(Integer idCliente);
+	
+	/**
+	 * <p>
+	 * Permite consultar los datos de un Cliente en la base de datos dado su id
+	 * </p> 
+	 * @param idCliente
+	 * @return Cliente
+	 */
+	Cliente findClienteById(Integer idCliente);
+	
+	/**
+	 * <p>
+	 * Permite guardar un item de la factura en la base de datos
+	 * </p> 
+	 * 
+	 * @return Item
+	 */
+	Item saveItem(Item item);
+	
+	/**
+	 * <p>
+	 * Permite guardar una factura en la base de datos
+	 * </p> 
+	 * 
+	 * @return Factura
+	 */
+	Factura saveFactura(Factura factura);
+	
+	/**
+	 * <p>
+	 * Permite consultar un estado de factura en la base de datos dado su nombre
+	 * </p> 
+	 * @param nombre
+	 * @return EstadoFactura
+	 */
+	EstadoFactura findEstadoFacturaByNombre(String nombre);
+	
+	/**
+	 * <p>
+	 * Permite consultar una lista de items por factura
+	 * </p> 
+	 * 
+	 * @return List<Item>
+	 */
+	List<Item> findItemsByFactura(Factura factura);
+	
+	/**
+	 * <p>
+	 * Permite eliminar un item
+	 * </p> 
+	 * 
+	 * @return Boolean
+	 */
+	boolean deleteItem(Item item);
+	
+	/**
+	 * <p>
+	 * Permite consultar una lista de detalles Adicionales por factura
+	 * </p> 
+	 * 
+	 * @return List<DetallesAdicionale>
+	 */
+	List<DetallesAdicionale> findDetallesByFactura(Factura factura);
+	
+	/**
+	 * <p>
+	 * Permite guardar un detalle de la factura en la base de datos
+	 * </p> 
+	 * 
+	 * @return DetallesAdicionale
+	 */
+	DetallesAdicionale saveDetallesAdicionale(DetallesAdicionale detallesAdicionale);
+	
+	/**
+	 * <p>
+	 * Permite eliminar un detalle
+	 * </p> 
+	 * 
+	 * @return Boolean
+	 */
+	boolean deleteDetallesAdicionale(DetallesAdicionale detalleAdicional);
+	
+	/**
+	 * <p>
+	 * Permite consultar todos los estadosFactura en la base de datos
+	 * </p> 
+	 * 
+	 * @return List<EstadoFactura>
+	 */
+	List<EstadoFactura> findAllEstadoFactura();
+	
+	/**
+	 * <p>
+	 * Permite consultar un estado de factura en la base de datos dado su idFactura
+	 * </p> 
+	 * @param idFactura
+	 * @return EstadoFactura
+	 */
+	EstadoFactura findEstadoFacturaById(Integer idFactura);
+}

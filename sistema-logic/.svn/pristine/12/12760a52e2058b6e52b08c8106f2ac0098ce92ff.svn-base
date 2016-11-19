@@ -1,0 +1,153 @@
+package co.com.softone.ingesoft.logic.entities;
+
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * The persistent class for the factura database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Factura.findAll", query="SELECT f FROM Factura f")
+public class Factura implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="CONDICIONES_PAGO")
+	private String condicionesPago;
+
+	@Lob
+	private String descripcion;
+
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
+
+	@Column(name="PORCENTAJE_FACTURA")
+	private double porcentajeFactura;
+
+	@Column(name="VALOR_FACTURAR")
+	private double valorFacturar;
+
+	@Column(name="VALOR_TOTAL")
+	private double valorTotal;
+
+	//bi-directional many-to-one association to DetallesAdicionale
+	@OneToMany(mappedBy="factura")
+	private List<DetallesAdicionale> detallesAdicionales;
+
+	//bi-directional many-to-one association to EstadoFactura
+	@ManyToOne
+	@JoinColumn(name="ID_ESTADO_FACTURA")
+	private EstadoFactura estadoFactura;
+
+	//bi-directional many-to-one association to Cliente
+	@ManyToOne
+	@JoinColumn(name="ID_CLIENTE")
+	private Cliente cliente;
+
+	public Factura() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCondicionesPago() {
+		return this.condicionesPago;
+	}
+
+	public void setCondicionesPago(String condicionesPago) {
+		this.condicionesPago = condicionesPago;
+	}
+
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Date getFecha() {
+		return this.fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public double getPorcentajeFactura() {
+		return this.porcentajeFactura;
+	}
+
+	public void setPorcentajeFactura(double porcentajeFactura) {
+		this.porcentajeFactura = porcentajeFactura;
+	}
+
+	public double getValorFacturar() {
+		return this.valorFacturar;
+	}
+
+	public void setValorFacturar(double valorFacturar) {
+		this.valorFacturar = valorFacturar;
+	}
+
+	public double getValorTotal() {
+		return this.valorTotal;
+	}
+
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public List<DetallesAdicionale> getDetallesAdicionales() {
+		return this.detallesAdicionales;
+	}
+
+	public void setDetallesAdicionales(List<DetallesAdicionale> detallesAdicionales) {
+		this.detallesAdicionales = detallesAdicionales;
+	}
+
+	public DetallesAdicionale addDetallesAdicionale(DetallesAdicionale detallesAdicionale) {
+		getDetallesAdicionales().add(detallesAdicionale);
+		detallesAdicionale.setFactura(this);
+
+		return detallesAdicionale;
+	}
+
+	public DetallesAdicionale removeDetallesAdicionale(DetallesAdicionale detallesAdicionale) {
+		getDetallesAdicionales().remove(detallesAdicionale);
+		detallesAdicionale.setFactura(null);
+
+		return detallesAdicionale;
+	}
+
+	public EstadoFactura getEstadoFactura() {
+		return this.estadoFactura;
+	}
+
+	public void setEstadoFactura(EstadoFactura estadoFactura) {
+		this.estadoFactura = estadoFactura;
+	}
+
+	public Cliente getCliente() {
+		return this.cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+}
