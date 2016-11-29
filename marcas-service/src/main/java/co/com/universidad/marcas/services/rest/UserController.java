@@ -1,6 +1,6 @@
 /**
  * UserController.java
- * Copyright (c) SoftOne - Disponible All rights reserved.
+ * Copyright (c) - Disponible All rights reserved.
  * 4/12/2014
  * ${version}
  */
@@ -30,9 +30,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Class to produce worker user json to android layer.
+ * Class to produce worker user json to android layer. 
  * 
- * @author <a href="cgonzalez@softone.com.co">Christian Gonzalez</a>
  *
  */
 @Controller
