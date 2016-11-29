@@ -4,15 +4,15 @@ define([
   'backbone',
   'views/sidebar/SidebarView',
   'text!templates/usuario/crearUsuario.html'
-], function($, _, Backbone, SidebarView, login){
+], function($, _, Backbone, SidebarView, crearUsuario){
 
-  var crearUsuario = Backbone.View.extend({
+  var crearUsuario2 = Backbone.View.extend({
     el: $("#page"),
 
     render: function(){
       
       $('.menu li').removeClass('active');
-      $('.menu li a[href="#"]').parent().addClass('active');
+      $('.menu li a[href="#/crearU"]').parent().addClass('active');
       this.$el.html(crearUsuario);
 
       var sidebarView = new SidebarView();
@@ -22,6 +22,6 @@ define([
 
   });
 
-  return crearUsuario;
+  return crearUsuario2;
   
 });

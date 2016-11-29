@@ -11,8 +11,13 @@ define([
   'views/otros/funcionamientoView',
   'views/otros/generarSoporteView',
   'views/usuario/modificarUsuarioView',
+  'views/usuario/LoginView', 
+  'views/usuario/crearUsuarioView',
+  'views/otros/contactoAyudaView',
+  'views/otros/PaginaInicioView'
     
-], function($, _, Backbone, HomeView, ProjectsView, ContributorsView, FooterView, eliminarUsuarioView, funcionamientoView, generarSoporteView, modificarUsuarioView) {
+], function($, _, Backbone, HomeView, ProjectsView, ContributorsView, FooterView, eliminarUsuarioView, funcionamientoView, generarSoporteView, modificarUsuarioView, LoginView, crearUsuarioView,
+		contactoAyudaView,paginaInicioView) {
   
   var AppRouter = Backbone.Router.extend({
     routes: {
@@ -23,6 +28,10 @@ define([
       'modificarU': 'showmodificarUsuario',
       'funcionamientoU': 'showfuncionamiento',
       'generarU': 'showgenerarSoporte',
+      'login' : 'showLogin',
+	  'crearU' : 'showCrearUsuario',
+	  'contactoA' : 'showContactoAyuda',
+	  'pInicio':'showPaginaInicio',
      
       // Default
       '*actions': 'defaultAction'
@@ -78,6 +87,29 @@ define([
     	var genera_SopView = new generarSoporteView();
     	genera_SopView.render();
      });
+    
+    app_router.on('route:showLogin', function() {
+		var loginView = new LoginView();
+		loginView.render();
+
+	});
+
+	app_router.on('route:showCrearUsuario', function() {
+		var crear = new crearUsuarioView();
+		crear.render();
+	});
+
+	app_router.on('route:showContactoAyuda', function() {
+		var contac = new contactoAyudaView();
+		contac.render();
+
+	});
+	
+	app_router.on('route:showPaginaInicio', function() {
+		var pInicio = new paginaInicioView();
+		pInicio.render();
+
+	});
     // Unlike the above, we don't call render on this view as it will handle
     // the render call internally after it loads data. Further more we load it
     // outside of an on-route function to have it loaded no matter which page is

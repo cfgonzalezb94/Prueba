@@ -3,16 +3,16 @@ define([
   'underscore',
   'backbone',
   'views/sidebar/SidebarView',
-  'text!templates/otros/contactoAyuda.html'
-], function($, _, Backbone, SidebarView, login){
+  'text!templates/marca/contactoAyuda.html'
+], function($, _, Backbone, SidebarView, contactoAyuda){
 
-  var contactoAyuda = Backbone.View.extend({
+  var contactoAyuda2 = Backbone.View.extend({
     el: $("#page"),
 
     render: function(){
       
       $('.menu li').removeClass('active');
-      $('.menu li a[href="#"]').parent().addClass('active');
+      $('.menu li a[href="#/contactoA"]').parent().addClass('active');
       this.$el.html(contactoAyuda);
 
       var sidebarView = new SidebarView();
@@ -22,6 +22,6 @@ define([
 
   });
 
-  return contactoAyuda;
+  return contactoAyuda2;
   
 });

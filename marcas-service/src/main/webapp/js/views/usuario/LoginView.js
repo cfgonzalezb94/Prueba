@@ -6,22 +6,32 @@ define([
   'text!templates/usuario/login.html'
 ], function($, _, Backbone, SidebarView, login){
 
-  var login = Backbone.View.extend({
+  var login2 = Backbone.View.extend({
     el: $("#page"),
 
     render: function(){
       
       $('.menu li').removeClass('active');
-      $('.menu li a[href="#"]').parent().addClass('active');
+      $('.menu li a[href="#/login"]').parent().addClass('active');
       this.$el.html(login);
 
       var sidebarView = new SidebarView();
       sidebarView.render();
  
+    },
+
+    events: {
+      "click #loginButton": "login"
+    }, 
+
+    login: function(){
+      var usuarios= document.getElementById("USER").value;
+      var contrasena=document.getElementById("PASS").value;
+      alert(usuarios+""+contrasena);
     }
 
   });
 
-  return login;
+  return login2;
   
 });
