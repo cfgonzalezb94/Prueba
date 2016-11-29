@@ -19,10 +19,10 @@ define([
       // Define some URL routes
       'projects': 'showProjects',
       'users': 'showContributors',
-      'usuario': 'showeliminarUsuario',
-      'usuario': 'showmodificarUsuario',
-      'otros': 'showfuncionamiento',
-      'otros': 'showgenerarSoporte',
+      'eliminarU': 'showeliminarUsuario',
+      'modificarU': 'showmodificarUsuario',
+      'funcionamientoU': 'showfuncionamiento',
+      'generarU': 'showgenerarSoporte',
      
       // Default
       '*actions': 'defaultAction'
@@ -75,8 +75,8 @@ define([
 
     app_router.on('route:showgenerarSoporte', function () {
         
-    	var generaView = new generarSoporteView();
-    	generaView.render();
+    	var genera_SopView = new generarSoporteView();
+    	genera_SopView.render();
      });
     // Unlike the above, we don't call render on this view as it will handle
     // the render call internally after it loads data. Further more we load it
