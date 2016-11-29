@@ -1,8 +1,8 @@
 /**
  * UserController.java
  * Copyright (c) - Disponible All rights reserved.
- * 4/12/2014
- * ${version}
+ * 
+ * 
  */
 package co.com.universidad.marcas.services.rest;
 
