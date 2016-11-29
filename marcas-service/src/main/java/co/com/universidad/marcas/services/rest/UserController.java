@@ -58,6 +58,20 @@ public class UserController {
     	return response;
     }
     
+    @RequestMapping(value = "buscarUsuario", method = RequestMethod.GET)
+    public @ResponseBody String findUserByUsuario(@RequestParam(value="usuario") String usuario) throws JsonGenerationException, JsonMappingException, IOException {
+    	
+    	Usuario usuarioEn = generalService.findUsuarioByUsuario(usuario);
+    	String response = "";
+    	
+    	Object usuarioObject = ((Object)usuarioEn);
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	response = mapper.writeValueAsString(usuarioObject);    	    	
+    	   	   
+    	return response;
+    }
+    
     @RequestMapping(value = "buscarCargo", method = RequestMethod.GET)
     public @ResponseBody String findCargo(@RequestParam(value="idCargo") Integer idCargo) throws JsonGenerationException, JsonMappingException, IOException {
     	
@@ -82,6 +96,34 @@ public class UserController {
     	
     	ObjectMapper mapper = new ObjectMapper();
     	response = mapper.writeValueAsString(usuarioObject);    	    	
+    	   	   
+    	return response;
+    }
+    
+    @RequestMapping(value = "buscarMarca", method = RequestMethod.GET)
+    public @ResponseBody String findMarca(@RequestParam(value="idMarca") Integer idMarca) throws JsonGenerationException, JsonMappingException, IOException {
+    	
+    	Marca marca = generalService.findMarcaById(idMarca);
+    	String response = "";
+    	
+    	Object object = ((Object)marca);
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	response = mapper.writeValueAsString(object);    	    	
+    	   	   
+    	return response;
+    }
+    
+    @RequestMapping(value = "buscarMarca", method = RequestMethod.GET)
+    public @ResponseBody String findMarcaByNombre(@RequestParam(value="nombre") String nombre) throws JsonGenerationException, JsonMappingException, IOException {
+    	
+    	Marca marca = generalService.findMarcaByNombre(nombre);
+    	String response = "";
+    	
+    	Object object = ((Object)marca);
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	response = mapper.writeValueAsString(object);    	    	
     	   	   
     	return response;
     }

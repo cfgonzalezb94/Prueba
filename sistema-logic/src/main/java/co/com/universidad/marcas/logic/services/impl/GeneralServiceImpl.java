@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
+
+
 import co.com.universidad.marcas.logic.entities.Cargo;
 import co.com.universidad.marcas.logic.entities.Categoria;
 import co.com.universidad.marcas.logic.entities.Marca;
@@ -75,6 +78,18 @@ public class GeneralServiceImpl implements GeneralService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
+	 * co.com.universidad.marcas.logic.services.GeneralService#findUsuarioByUsuario(id)
+	 */
+	@Override
+	public Usuario findUsuarioByUsuario(String usuario){
+		Usuario usuarioEn = usuarioRepository.findByUsuario(usuario); 
+		return usuarioEn;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
 	 * co.com.universidad.marcas.logic.services.GeneralService#findCargoById(id)
 	 */
 	@Override
@@ -93,6 +108,30 @@ public class GeneralServiceImpl implements GeneralService {
 	public TiposSuscripcion findTipoSuscripcionById(Integer id){
 		TiposSuscripcion tipo = tipoSuscripcionRepository.findOne(id); 
 		return tipo;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.universidad.marcas.logic.services.GeneralService#findMarcaById(id)
+	 */
+	@Override
+	public Marca findMarcaById(Integer id){
+		Marca marca = marcaRepository.findOne(id); 
+		return marca;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.com.universidad.marcas.logic.services.GeneralService#findMarcaById(id)
+	 */
+	@Override
+	public Marca findMarcaByNombre(String nombre){
+		Marca marca = marcaRepository.findByNombre(nombre); 
+		return marca;
 	}
 	
 	/*

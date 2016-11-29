@@ -37,6 +37,15 @@ public interface GeneralService {
 	
 	/**
 	 * <p>
+	 * Permite consultar un usuario por nombre
+	 * </p> 
+	 * @param nombre
+	 * @return Usuario
+	 */
+	Usuario findUsuarioByUsuario(String usuario);
+	
+	/**
+	 * <p>
 	 * Permite consultar una lista de usuarios
 	 * </p> 
 	 * @return List<Usuario>
@@ -59,6 +68,24 @@ public interface GeneralService {
 	 * @return Cargo
 	 */
 	Cargo findCargoById(Integer id);
+	
+	/**
+	 * <p>
+	 * Permite consultar una marca por su id
+	 * </p> 
+	 * @param id
+	 * @return marca
+	 */
+	Marca findMarcaById(Integer id);
+	
+	/**
+	 * <p>
+	 * Permite consultar una marca por nombre
+	 * </p> 
+	 * @param nombre
+	 * @return marca
+	 */
+	Marca findMarcaByNombre(String nombre);
 	
 	/**
 	 * <p>

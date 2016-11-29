@@ -23,4 +23,8 @@ import co.com.universidad.marcas.logic.entities.Marca;
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca, Integer> {
 	
+	/**
+	 * <p>Busca una marca por su nombre</p>
+	 */
+	Marca findByNombre(String nombre);
 }

@@ -29,4 +29,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	 */
 	Usuario findById(Integer id);
 	
+	/**
+	 * <p>Busca un usuario por su usuario</p>
+	 */
+	Usuario findByUsuario(String usuario);
+	
+	
 }
