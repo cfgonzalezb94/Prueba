@@ -44,7 +44,7 @@ public class UserController {
     private GeneralService generalService;
 	
 		
-    @RequestMapping(value = "buscarUsuario", method = RequestMethod.GET)
+    @RequestMapping(value = "buscarUsuarioById", method = RequestMethod.GET)
     public @ResponseBody String findUser(@RequestParam(value="idUsuario") Integer idUsuario) throws JsonGenerationException, JsonMappingException, IOException {
     	
     	Usuario usuario = generalService.findUsuarioById(idUsuario);
@@ -100,7 +100,7 @@ public class UserController {
     	return response;
     }
     
-    @RequestMapping(value = "buscarMarca", method = RequestMethod.GET)
+    @RequestMapping(value = "buscarMarcaById", method = RequestMethod.GET)
     public @ResponseBody String findMarca(@RequestParam(value="idMarca") Integer idMarca) throws JsonGenerationException, JsonMappingException, IOException {
     	
     	Marca marca = generalService.findMarcaById(idMarca);
